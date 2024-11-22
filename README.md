@@ -1,11 +1,11 @@
-# My Express App
+# AirCleanse API
 
 This is a simple Express application scaffolded using TypeScript.
 
 ## Project Structure
 
 ```
-my-express-app
+air-cleanse-api
 ├── src
 │   ├── app.ts                  # The main entry point of the application
 │   ├── components              # Contains controllers for handling requests
@@ -28,7 +28,7 @@ my-express-app
 To install the dependencies, run:
 
 ```
-npm install
+yarn install
 ```
 
 ## Running the Application
@@ -36,7 +36,7 @@ npm install
 To start the application, use the following command:
 
 ```
-npm start
+yarn dev
 ```
 
 ## License
