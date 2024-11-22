@@ -7,16 +7,20 @@ This is a simple Express application scaffolded using TypeScript.
 ```
 my-express-app
 ├── src
-│   ├── app.ts                # Entry point of the application
-│   ├── controllers           # Contains controllers for handling requests
-│   │   └── index.ts          # Index controller
-│   ├── routes                # Contains route definitions
-│   │   └── index.ts          # Route setup
-│   └── types                 # Custom TypeScript types
-│       └── index.ts          # Type definitions
-├── package.json              # NPM package configuration
-├── tsconfig.json             # TypeScript configuration
-└── README.md                 # Project documentation
+│   ├── app.ts                  # The main entry point of the application
+│   ├── components              # Contains controllers for handling requests
+│   │   ├── index.ts            # Exports all components
+│   │   ├── component           # Contains individual component controllers
+│   │   │   ├── controller.ts   # Contains the logic for a specific component
+│   │   │   ├── index.ts        # Exports component routes
+│   │   │   └── network.ts      # Sets up component routes
+│   ├── router                  # Contains route definitions
+│   │   └── index.ts            # Main router setup
+│   └── types                   # Custom TypeScript types
+│       └── index.ts            # Type definitions
+├── package.json                # Project metadata and dependencies
+├── tsconfig.json               # TypeScript configuration
+└── README.md                   # Project documentation
 ```
 
 ## Installation
