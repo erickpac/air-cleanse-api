@@ -9,9 +9,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+setRoutes(app);
+
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
-
-setRoutes(app);
 
 export default app;
