@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import { ServerStatusRouter } from "../components";
+import { ServerStatusRouter } from "@/components";
 
 type Route = [string, Router];
 const routes: Route[] = [["server-status", ServerStatusRouter]];

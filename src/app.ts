@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
-import setRoutes from "./router";
-import * as middleware from "./middlewares";
+import setRoutes from "@/router";
+import * as middleware from "@/middlewares";
 
 const app: Application = express();
 
