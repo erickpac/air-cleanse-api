@@ -7,10 +7,12 @@ This is a simple Express application scaffolded using TypeScript.
 ```
 air-cleanse-api
 ├── src
-│   ├── app.ts                  # The main entry point of the application
-│   ├── components              # Contains controllers for handling requests
-│   │   ├── index.ts            # Exports all components
-│   │   ├── component           # Contains individual component controllers
+│   ├── index.ts                # Main entry point of the application
+│   ├── app.ts                  # Application setup and configuration
+│   ├── middlewares.ts          # Custom middleware functions
+│   ├── components              # Controllers for handling requests
+│   │   ├── index.ts            # Exports all component controllers
+│   │   ├── component           # Individual component controllers
 │   │   │   ├── controller.ts   # Contains the logic for a specific component
 │   │   │   ├── index.ts        # Exports component routes
 │   │   │   └── network.ts      # Sets up component routes
