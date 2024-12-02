@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  password    String
+  phone       String?    @db.VarChar(15)
+  createdAt   DateTime   @default(now())
+  role        Role // Enum to track user roles (HOST, CLEANER, or BOTH)
+  properties  Property[]
+  cleanerInfo Cleaner?
+}
+
+model Property {
+  id           Int                @id @default(autoincrement())
+  hostId       Int
+  host         User               @relation(fields: [hostId], references: [id])
+  name         String
+  address      String
+  city         String
+  country      String
+  createdAt    DateTime           @default(now())
+  schedules    CleaningSchedule[]
+  calendarSync CalendarSync[]
+}
+
+model Cleaner {
+  id           Int                @id @default(autoincrement())
+  userId       Int                @unique
+  user         User               @relation(fields: [userId], references: [id])
+  experience   String?
+  location     String
+  rating       Float              @default(0)
+  availability Json?
+  schedules    CleaningSchedule[]
+}
+
+model CleaningSchedule {
+  id         Int            @id @default(autoincrement())
+  propertyId Int
+  cleanerId  Int?
+  property   Property       @relation(fields: [propertyId], references: [id])
+  cleaner    Cleaner?       @relation(fields: [cleanerId], references: [id])
+  startTime  DateTime
+  endTime    DateTime
+  status     ScheduleStatus @default(SCHEDULED)
+  createdAt  DateTime       @default(now())
+  tasks      Task[]
+  payment    Payment?
+  feedback   Feedback?
+}
+
+model Task {
+  id          Int              @id @default(autoincrement())
+  scheduleId  Int
+  schedule    CleaningSchedule @relation(fields: [scheduleId], references: [id])
+  description String
+  status      TaskStatus       @default(PENDING)
+}
+
+model Payment {
+  id          Int              @id @default(autoincrement())
+  scheduleId  Int              @unique
+  schedule    CleaningSchedule @relation(fields: [scheduleId], references: [id])
+  amount      Float
+  paymentDate DateTime         @default(now())
+  status      PaymentStatus    @default(PENDING)
+}
+
+model Feedback {
+  id         Int              @id @default(autoincrement())
+  scheduleId Int              @unique
+  schedule   CleaningSchedule @relation(fields: [scheduleId], references: [id])
+  rating     Int
+  comments   String?
+  createdAt  DateTime         @default(now())
+}
+
+model CalendarSync {
+  id          Int      @id @default(autoincrement())
+  propertyId  Int
+  property    Property @relation(fields: [propertyId], references: [id])
+  platform    String
+  calendarUrl String
+  lastSynced  DateTime @default(now())
+}
+
+enum Role {
+  HOST
+  CLEANER
+  BOTH
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
