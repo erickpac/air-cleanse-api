@@ -9,7 +9,7 @@ air-cleanse-api
 ├── prisma                      # Prisma ORM configuration and related files
 │   ├── migrations              # Stores database migration files
 │   ├── schema.prisma           # Defines the Prisma schema for the database
-│   └── seeds.ts                # Script for seeding the database with initial data
+│   └── seed.ts                 # Script for seeding the database with initial data
 ├── src                         # Source code of the application
 │   ├── index.ts                # Main entry point of the application
 │   ├── app.ts                  # Sets up and configures the application
