@@ -35,7 +35,7 @@ air-cleanse-api
 
 To install the dependencies, run:
 
-```
+```sh
 yarn install
 ```
 
@@ -43,7 +43,7 @@ yarn install
 
 To start the application, use the following command:
 
-```
+```sh
 yarn dev
 ```
 
@@ -53,7 +53,7 @@ yarn dev
 
 Run the following commands to generate the migrations and apply them to your database:
 
-```
+```sh
 npx prisma migrate dev --name migration_name
 ```
 
@@ -61,7 +61,7 @@ npx prisma migrate dev --name migration_name
 
 If you don’t want to reset the database but still apply the latest migration, run:
 
-```
+```sh
 npx prisma migrate deploy
 ```
 
@@ -69,7 +69,7 @@ npx prisma migrate deploy
 
 If you want to completely reset the database (including seeding), you can use the following command:
 
-```
+```sh
 npx prisma migrate reset
 ```
 
@@ -77,7 +77,7 @@ npx prisma migrate reset
 
 Generate the Prisma Client to interact with your database in your Express app:
 
-```
+```sh
 npx prisma generate
 ```
 
@@ -85,7 +85,7 @@ npx prisma generate
 
 Run the seeding script using Prisma:
 
-```
+```sh
 npx prisma db seed
 ```
 
