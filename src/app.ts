@@ -2,7 +2,7 @@ import "dotenv/config";
 import express, { Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
-import setRoutes from "@/router";
+import { setRoutes } from "@/router";
 
 export const app: Application = express();
 

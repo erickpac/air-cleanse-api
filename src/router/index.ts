@@ -9,7 +9,7 @@ const routes: Route[] = [
   ["properties", PropertiesRouter],
 ];
 
-const setRoutes = (app: Application) => {
+export const setRoutes = (app: Application) => {
   const router = Router();
 
   app.use("/api/v1", router);
@@ -20,5 +20,3 @@ const setRoutes = (app: Application) => {
     router.use(`/${path}`, route);
   });
 };
-
-export default setRoutes;
