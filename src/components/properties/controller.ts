@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "@/database/client";
+import * as service from "./service";
 import { normalizeError } from "@/utils/normalize-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
@@ -20,13 +21,7 @@ export const getProperty = async (req: Request, res: Response) => {
       throw new CustomError("Invalid food ID format", 400);
     }
 
-    const property = await prisma.property.findUnique({
-      where: { id: parsedId },
-    });
-
-    if (!property) {
-      throw new CustomError("Property not found", 404);
-    }
+    const property = await service.getProperty(parsedId);
 
     return sendSuccessResponse({
       res,
