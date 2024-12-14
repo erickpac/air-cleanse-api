@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { sendErrorResponse } from "@/common/responses";
+import { sendErrorResponse } from "@/common/responses/error";
 import { ZodSchema } from "zod";
 
 /**
@@ -56,7 +56,7 @@ export const errorHandler = (
  * Middleware to validate request data using a Zod schema.
  *
  * @param schema - The Zod schema to validate the request body against.
- * 
+ *
  * @returns A middleware function that validates the request body and forwards errors if validation fails.
  *
  * @remarks
@@ -69,8 +69,7 @@ export const errorHandler = (
  * app.post("/example", validate(schema), (req, res) => { res.send("Valid data!"); });
  */
 export const validate =
-  (schema: ZodSchema) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body); // Validates req.body against schema
       next();
