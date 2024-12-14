@@ -1,7 +1,9 @@
 import type { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/database/client";
+import { normalizeError } from "@/utils/normalize-error";
+import { sendErrorResponse } from "@/common/responses/error";
+import { sendSuccessResponse } from "@/common/responses/success";
+import { z } from "zod";
 
 export const getAllProperties = async (req: Request, res: Response) => {
   const properties = await prisma.property.findMany();
@@ -10,18 +12,33 @@ export const getAllProperties = async (req: Request, res: Response) => {
 };
 
 export const getProperty = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  try {
+    const idSchema = z.object({
+      id: z.string().transform((val) => Number(val)),
+    });
 
-  if (!id) {
-    res.status(400).json({ message: "Missing required field" });
-    return;
+    const { id } = idSchema.parse(req.params);
+
+    const property = await prisma.property.findUnique({
+      where: { id },
+    });
+
+    if (!property) {
+      return sendErrorResponse({
+        res,
+        message: "Property not found",
+        statusCode: 404,
+      });
+    }
+
+    return sendSuccessResponse({
+      res,
+      data: property,
+    });
+  } catch (error) {
+    const { message, statusCode } = normalizeError(error);
+    return sendErrorResponse({ res, message, statusCode });
   }
-
-  const property = await prisma.property.findUnique({
-    where: { id },
-  });
-
-  res.status(200).json(property);
 };
 
 export const createProperty = async (req: Request, res: Response) => {
