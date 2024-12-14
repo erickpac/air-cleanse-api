@@ -56,6 +56,7 @@ export const createProperty = async (req: Request, res: Response) => {
 
 export const updateProperty = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const parsedId = Number(id);
   const { name, address, city, country } = req.body;
 
   if (!id) {
@@ -64,7 +65,7 @@ export const updateProperty = async (req: Request, res: Response) => {
   }
 
   const property = await prisma.property.update({
-    where: { id },
+    where: { id: parsedId },
     data: { name, address, city, country },
   });
 
@@ -73,6 +74,7 @@ export const updateProperty = async (req: Request, res: Response) => {
 
 export const deleteProperty = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const parsedId = Number(id);
 
   if (!id) {
     res.status(400).json({ message: "Missing required field" });
@@ -80,7 +82,7 @@ export const deleteProperty = async (req: Request, res: Response) => {
   }
 
   const property = await prisma.property.delete({
-    where: { id },
+    where: { id: parsedId },
   });
 
   res.status(200).json(property);
