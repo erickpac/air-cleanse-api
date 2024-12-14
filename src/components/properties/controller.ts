@@ -3,7 +3,6 @@ import prisma from "@/database/client";
 import { normalizeError } from "@/utils/normalize-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
-import { z } from "zod";
 
 export const getAllProperties = async (req: Request, res: Response) => {
   const properties = await prisma.property.findMany();
@@ -13,14 +12,18 @@ export const getAllProperties = async (req: Request, res: Response) => {
 
 export const getProperty = async (req: Request, res: Response) => {
   try {
-    const idSchema = z.object({
-      id: z.string().transform((val) => Number(val)),
-    });
+    const { id } = req.params;
+    const parsedId = Number(id);
 
-    const { id } = idSchema.parse(req.params);
-
+    if (isNaN(parsedId)) {
+      return sendErrorResponse({
+        res,
+        message: "Invalid food ID format",
+        statusCode: 400,
+      });
+    }
     const property = await prisma.property.findUnique({
-      where: { id },
+      where: { id: parsedId },
     });
 
     if (!property) {
