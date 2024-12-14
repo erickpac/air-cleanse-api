@@ -3,6 +3,7 @@ import prisma from "@/database/client";
 import { normalizeError } from "@/utils/normalize-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
+import { CustomError } from "@/common/custom/custom-error";
 
 export const getAllProperties = async (req: Request, res: Response) => {
   const properties = await prisma.property.findMany();
@@ -16,22 +17,15 @@ export const getProperty = async (req: Request, res: Response) => {
     const parsedId = Number(id);
 
     if (isNaN(parsedId)) {
-      return sendErrorResponse({
-        res,
-        message: "Invalid food ID format",
-        statusCode: 400,
-      });
+      throw new CustomError("Invalid food ID format", 400);
     }
+
     const property = await prisma.property.findUnique({
       where: { id: parsedId },
     });
 
     if (!property) {
-      return sendErrorResponse({
-        res,
-        message: "Property not found",
-        statusCode: 404,
-      });
+      throw new CustomError("Property not found", 404);
     }
 
     return sendSuccessResponse({
