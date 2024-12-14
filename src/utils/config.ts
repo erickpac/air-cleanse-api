@@ -1,7 +1,7 @@
-import "dotenv/config";
 import { z } from "zod";
 
 const envSchema = z.object({
+  NODE_ENV: z.string().default("development"),
   PORT: z.string().default("3000"),
   DATABASE_URL: z.string(),
   CURRENT_URL: z.string(),
@@ -15,4 +15,4 @@ if (!success) {
   process.exit(1);
 }
 
-export const { PORT, DATABASE_URL, CURRENT_URL, API_VERSION } = data;
+export const { NODE_ENV, PORT, DATABASE_URL, CURRENT_URL, API_VERSION } = data;

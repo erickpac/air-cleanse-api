@@ -10,17 +10,15 @@ import type { Response } from "express";
  * @param data - The data to be included in the response.
  * @returns The response object with the success details.
  */
-const success = ({
+export const sendSuccessResponse = ({
   res,
   status = 200,
   info,
   data,
 }: SuccessResponse): Response => {
   if (info) {
-    return res.status(status).json({ info, results: data });
+    return res.status(status).json({ info, data });
   }
 
-  return res.status(status).json({ results: data });
+  return res.status(status).json({ data });
 };
-
-export default success;
