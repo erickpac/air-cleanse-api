@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { sendErrorResponse } from "@/common/responses/error";
 import { ZodSchema } from "zod";
+import { normalizeError } from "./utils/normalize-error";
 
 /**
  * Middleware to handle requests to routes that are not found.
@@ -45,11 +46,9 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  const statusCode =
-    res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
-  const stack = process.env.NODE_ENV === "production" ? undefined : err.stack;
+  const { message, statusCode, stack } = normalizeError(err);
 
-  sendErrorResponse({ res, statusCode, message: err.message, stack });
+  return sendErrorResponse({ res, message, statusCode, stack });
 };
 
 /**
@@ -74,8 +73,8 @@ export const validate =
       schema.parse(req.body); // Validates req.body against schema
       next();
     } catch (err) {
-      if (err instanceof Error) {
-        res.status(400).json({ error: err.message });
-      }
+      const { message, statusCode, stack } = normalizeError(err);
+
+      return sendErrorResponse({ res, message, statusCode, stack });
     }
   };
