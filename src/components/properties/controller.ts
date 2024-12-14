@@ -37,6 +37,7 @@ export const getProperty = async (req: Request, res: Response) => {
     });
   } catch (error) {
     const { message, statusCode } = normalizeError(error);
+
     return sendErrorResponse({ res, message, statusCode });
   }
 };
