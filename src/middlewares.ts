@@ -68,8 +68,6 @@ export const validate =
       schema.parse(req.body); // Validates req.body against schema
       next();
     } catch (err) {
-      const { message, statusCode, stack } = normalizeError(err);
-
-      return sendErrorResponse({ res, message, statusCode, stack });
+      next(err);
     }
   };
