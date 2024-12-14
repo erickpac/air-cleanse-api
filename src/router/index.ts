@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
-import { ServerStatusRouter } from "@/components";
-import { PropertiesRouter } from "@/components";
+import { router as ServerStatusRouter } from "@/components/server-status/network";
+import { router as PropertiesRouter } from "@/components/properties/network";
 
 type Route = [string, Router];
 const routes: Route[] = [
