@@ -6,6 +6,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   CURRENT_URL: z.string(),
   API_VERSION: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 const { success, error, data } = envSchema.safeParse(process.env);
@@ -15,4 +16,11 @@ if (!success) {
   process.exit(1);
 }
 
-export const { NODE_ENV, PORT, DATABASE_URL, CURRENT_URL, API_VERSION } = data;
+export const {
+  NODE_ENV,
+  PORT,
+  DATABASE_URL,
+  CURRENT_URL,
+  API_VERSION,
+  JWT_SECRET,
+} = data;
