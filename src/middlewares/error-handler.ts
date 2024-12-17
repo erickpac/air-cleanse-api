@@ -19,12 +19,12 @@ import { normalizeError } from "@/utils/normalize-error";
  * app.use(errorHandler);
  */
 export const errorHandler = (
-  err: Error,
+  error: Error,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const { message, statusCode, stack } = normalizeError(err);
+  const { message, statusCode, stack } = normalizeError(error);
 
   return sendErrorResponse({ res, message, statusCode, stack });
 };

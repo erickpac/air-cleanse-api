@@ -20,9 +20,11 @@ import { ZodSchema } from "zod";
 export const validate =
   (schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body); // Validates req.body against schema
+      const validatedData = schema.parse(req.body);
+
+      req.body = validatedData;
       next();
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   };
