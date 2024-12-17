@@ -43,6 +43,11 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await service.getUserByEmail(email);
+
+    if (!user) {
+      throw new CustomError("User not found", 404);
+    }
+
     const isMatch = await comparePassword(password, user.password);
 
     if (!isMatch) {
