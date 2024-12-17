@@ -3,7 +3,7 @@ import { InfoPagination } from "./info-pagination";
 
 export default interface SuccessResponse {
   res: Response;
-  status?: number;
+  statusCode?: number;
   data: any;
   info?: InfoPagination;
 }
