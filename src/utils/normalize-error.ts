@@ -8,9 +8,8 @@ export const normalizeError = (error: unknown): ErrorObject => {
 
   if (error instanceof ZodError) {
     return {
-      message: error.errors
-        .map((e) => `${e.path.join(".")}: ${e.message}`)
-        .join(", "),
+      message: "Invalid request data",
+      errors: error.errors,
       statusCode: 400,
     };
   }
