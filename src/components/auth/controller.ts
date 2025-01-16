@@ -18,8 +18,7 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await hashPassword(password);
-
-    await service.createUser({
+    const user = await service.createUser({
       name,
       email,
       password: hashedPassword,
@@ -30,7 +29,8 @@ export const register = async (req: Request, res: Response) => {
     return sendSuccessResponse({
       res,
       statusCode: 201,
-      data: { message: "User registered successfully" },
+      message: "User registered successfully",
+      data: user,
     });
   } catch (error) {
     const { message, statusCode } = normalizeError(error);
@@ -43,11 +43,6 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await service.getUserByEmail(email);
-
-    if (!user) {
-      throw new CustomError("User not found", 404);
-    }
-
     const isMatch = await comparePassword(password, user.password);
 
     if (!isMatch) {
