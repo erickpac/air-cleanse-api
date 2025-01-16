@@ -1,6 +1,6 @@
 import { CustomError } from "@/common/custom/error";
 
-export function parseAndValidateId(id: string): number {
+export const parseAndValidateId = (id: string): number => {
   const parsedId = Number(id);
 
   if (isNaN(parsedId)) {
@@ -8,4 +8,4 @@ export function parseAndValidateId(id: string): number {
   }
 
   return parsedId;
-}
+};
