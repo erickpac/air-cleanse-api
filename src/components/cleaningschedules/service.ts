@@ -7,7 +7,7 @@ export type CleaningSchedule = {
   cleanerId?: any;
   startTime: string;
   endTime: string;
-}
+};
 
 export const getCleaningSchedule = async (id: number) => {
   const schedule = await prisma.cleaningSchedule.findUnique({
@@ -15,7 +15,7 @@ export const getCleaningSchedule = async (id: number) => {
     include: {
       cleaner: true,
       property: true,
-    }
+    },
   });
 
   if (!schedule) {
