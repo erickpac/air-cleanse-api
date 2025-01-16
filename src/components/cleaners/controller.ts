@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import * as service from "./service";
-import { normalizeError } from "@/utils/normalize-error";
+import { normalizeError } from "@/lib/normalize-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
 import { CustomError } from "@/common/custom/error";
