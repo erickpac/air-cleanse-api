@@ -13,7 +13,7 @@ export const getCleaner = async (id: number) => {
     where: { id },
     include: {
       user: true,
-    }
+    },
   });
 
   if (!cleaner) {

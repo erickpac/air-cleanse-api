@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import * as service from "./service";
-import { normalizeError } from "@/utils/normalize-error";
+import { normalizeError } from "@/lib/normalize-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
 import { CustomError } from "@/common/custom/error";
@@ -27,7 +27,10 @@ export const getCleaningSchedule = async (req: Request, res: Response) => {
   }
 };
 
-export const getCleaningScheduleByCleaner = async (req: Request, res: Response) => {
+export const getCleaningScheduleByCleaner = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     const { id } = req.params;
     const parsedId = Number(id);
@@ -49,7 +52,10 @@ export const getCleaningScheduleByCleaner = async (req: Request, res: Response) 
   }
 };
 
-export const getCleaningScheduleByProperty = async (req: Request, res: Response) => {
+export const getCleaningScheduleByProperty = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     const { id } = req.params;
     const parsedId = Number(id);

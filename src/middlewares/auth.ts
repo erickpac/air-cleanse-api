@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { CustomError } from "@/common/custom/error";
-import { verifyToken } from "@/utils/auth";
+import { verifyToken } from "@/lib/auth";
 import { DecodedToken } from "@/types/decoded-token";
 
 /**

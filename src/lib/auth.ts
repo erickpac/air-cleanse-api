@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "@/utils/config";
+import { JWT_SECRET } from "@/lib/config";
 
 /**
  * Hashes a plain text password using bcrypt.
