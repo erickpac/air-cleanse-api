@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { Role } from "@prisma/client";
+
+const validRoles = Object.values(Role) as [string, ...string[]];
 
 export const registerSchema = z.object({
   name: z
@@ -11,7 +14,7 @@ export const registerSchema = z.object({
     .max(15, "Phone number is too long"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
-  role: z.enum(["HOST", "CLEANER", "BOTH"]).default("HOST"),
+  role: z.enum(validRoles).default("HOST"),
 });
 
 export const loginSchema = z.object({
