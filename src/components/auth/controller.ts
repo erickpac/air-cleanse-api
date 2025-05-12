@@ -49,7 +49,7 @@ export const login = async (req: Request, res: Response) => {
       throw new CustomError("Invalid credentials", 400);
     }
 
-    const token = generateToken(user.id, user.email);
+    const token = generateToken(user.id, user.email, user.role);
 
     return sendSuccessResponse({ res, data: { token } });
   } catch (error) {

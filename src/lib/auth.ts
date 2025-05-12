@@ -36,6 +36,7 @@ export const comparePassword = async (
  *
  * @param userId - The unique identifier of the user.
  * @param userEmail - The email address of the user.
+ * @param userRole - The role of the user (e.g., "host", "cleaner").
  * @returns A signed JWT as a string.
  *
  * @throws Will throw an error if the JWT_SECRET is not defined.
@@ -46,10 +47,18 @@ export const comparePassword = async (
  * console.log(token); // Outputs the generated JWT
  * ```
  */
-export const generateToken = (userId: number, userEmail: string): string => {
-  return jwt.sign({ id: userId, email: userEmail }, JWT_SECRET, {
-    expiresIn: "1h",
-  });
+export const generateToken = (
+  userId: number,
+  userEmail: string,
+  userRole: string,
+): string => {
+  return jwt.sign(
+    { id: userId, email: userEmail, role: userRole },
+    JWT_SECRET,
+    {
+      expiresIn: "1h",
+    },
+  );
 };
 
 /**
