@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import * as service from "./service";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
-import { normalizeError } from "@/lib/normalize-error";
+import { handleError } from "@/lib/handle-error";
 import { parseAndValidateId } from "@/lib/utils";
 
 export const getTask = async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ export const getTask = async (req: Request, res: Response) => {
 
     sendSuccessResponse({ res, data: task });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     sendErrorResponse({ res, message, statusCode });
   }
@@ -24,7 +24,7 @@ export const getTasks = async (req: Request, res: Response) => {
 
     sendSuccessResponse({ res, data: tasks });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     sendErrorResponse({ res, message, statusCode });
   }
@@ -36,7 +36,7 @@ export const createTask = async (req: Request, res: Response) => {
 
     sendSuccessResponse({ res, data: task });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     sendErrorResponse({ res, message, statusCode });
   }
@@ -49,7 +49,7 @@ export const updateTask = async (req: Request, res: Response) => {
 
     sendSuccessResponse({ res, data: task });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     sendErrorResponse({ res, message, statusCode });
   }
@@ -66,7 +66,7 @@ export const deleteTask = async (req: Request, res: Response) => {
       data: task,
     });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     sendErrorResponse({ res, message, statusCode });
   }

@@ -5,6 +5,6 @@ export default interface SuccessResponse {
   res: Response;
   statusCode?: number;
   message?: string;
-  data: any;
+  data: unknown;
   info?: InfoPagination;
 }

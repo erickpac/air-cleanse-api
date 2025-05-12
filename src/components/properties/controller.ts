@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "@/database/client";
 import * as service from "./service";
-import { normalizeError } from "@/lib/normalize-error";
+import { handleError } from "@/lib/handle-error";
 import { sendErrorResponse } from "@/common/responses/error";
 import { sendSuccessResponse } from "@/common/responses/success";
 import { CustomError } from "@/common/custom/error";
@@ -28,7 +28,7 @@ export const getProperty = async (req: Request, res: Response) => {
       data: property,
     });
   } catch (error) {
-    const { message, statusCode } = normalizeError(error);
+    const { message, statusCode } = handleError(error);
 
     return sendErrorResponse({ res, message, statusCode });
   }
