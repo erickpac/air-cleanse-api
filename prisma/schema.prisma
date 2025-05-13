@@ -13,6 +13,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  HOST
+  CLEANER
+  BOTH
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum BidStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id          Int        @id @default(autoincrement())
   name        String
@@ -23,6 +53,8 @@ model User {
   role        Role // Enum to track user roles (HOST, CLEANER, or BOTH)
   properties  Property[]
   cleanerInfo Cleaner?
+  bidRequests BidRequest[]
+  bidOffers   BidOffer[]
 }
 
 model Property {
@@ -36,6 +68,16 @@ model Property {
   createdAt    DateTime           @default(now())
   schedules    CleaningSchedule[]
   calendarSync CalendarSync[]
+  bidRequests  BidRequest[]
+}
+
+model CalendarSync {
+  id          Int      @id @default(autoincrement())
+  propertyId  Int
+  property    Property @relation(fields: [propertyId], references: [id])
+  platform    String
+  calendarUrl String
+  lastSynced  DateTime @default(now())
 }
 
 model Cleaner {
@@ -90,35 +132,27 @@ model Feedback {
   createdAt  DateTime         @default(now())
 }
 
-model CalendarSync {
-  id          Int      @id @default(autoincrement())
-  propertyId  Int
-  property    Property @relation(fields: [propertyId], references: [id])
-  platform    String
-  calendarUrl String
-  lastSynced  DateTime @default(now())
+model BidRequest {
+  id                 Int             @id @default(autoincrement())
+  host               User            @relation(fields: [hostId], references: [id])
+  hostId             Int
+  property           Property?       @relation(fields: [propertyId], references: [id])
+  propertyId         Int?
+  date               DateTime
+  frequency          String
+  serviceType        String
+  createdAt          DateTime        @default(now())
+  bids               BidOffer[]
 }
 
-enum Role {
-  HOST
-  CLEANER
-  BOTH
-}
-
-enum ScheduleStatus {
-  SCHEDULED
-  IN_PROGRESS
-  COMPLETED
-  CANCELED
-}
-
-enum TaskStatus {
-  PENDING
-  COMPLETED
-}
-
-enum PaymentStatus {
-  PENDING
-  COMPLETED
-  FAILED
+model BidOffer {
+  id                 Int             @id @default(autoincrement())
+  request            BidRequest      @relation(fields: [requestId], references: [id])
+  requestId          Int
+  cleaner            User            @relation(fields: [cleanerId], references: [id])
+  cleanerId          Int
+  amount             Float
+  status             BidStatus       @default(PENDING)
+  message            String?
+  createdAt          DateTime        @default(now())
 }
